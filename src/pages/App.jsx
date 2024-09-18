@@ -16,7 +16,7 @@ function App() {
 
     if(data.id){
       const repositorioExitente = repos.find(repo => repo.id === data.id)
-      
+
       if(!repositorioExitente)
       {
         setRepos(prev => [...prev, data]);
@@ -27,12 +27,16 @@ function App() {
     }
   }
 
+  const handleRemoverRepositorio = id => {
+    setRepos(repos.filter(repo => repo.id !== id));
+  }
+
   return (
     <Container className="App">
       <img src={gitHubLogo} alt="Logo do GitHub" width={72} height={72} />
       <Input placeholder="username/nome-do-repositorio" value={currentRepo} onChange={ (event) => setCurrentRepo(event.target.value)}/>
       <Button onCLick={handleBuscarRepositorio}/>
-      {repos.map(repo => <ItemRepo repositorio={repo} />)}
+      {repos.map(repo => <ItemRepo repositorio={repo} handleRemoverRepositorio={handleRemoverRepositorio} />)}
       
     </Container>
   );
